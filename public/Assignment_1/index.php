@@ -5,26 +5,9 @@
     <title>Assignment 1</title>
     <!-- BOOTSTRAP -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <style>
-        
-        .loader-gif{
-            text-align: center;
-            margin: 0 auto;
-        }
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Condensed&display=swap" rel="stylesheet">
 
-.active-cyan-2 input.form-control[type=text]:focus:not([readonly]) {
-  border-bottom: 1px solid #4dd0e1;
-  box-shadow: 0 1px 0 0 #4dd0e1;
-}
-.active-cyan input.form-control[type=text] {
-  border-bottom: 1px solid #4dd0e1;
-  box-shadow: 0 1px 0 0 #4dd0e1;
-}
-.active-cyan .fa, .active-cyan-2 .fa {
-  color: #4dd0e1;
-}
-
-    </style>
     <script>
 // ------------------------------------------------------------------- \\
     function getBookList(data)
@@ -46,7 +29,7 @@
 // ------------------------------------------------------------------- \\
 
     function loadListView(books) {
-        var html = '<table class=" table table-striped">';
+        var html = '<table class=" table table-striped table-dark">';
         html+= `
             <tr>
                 <th>Title</th>
@@ -103,19 +86,25 @@
         var html = 
         `
             <h3>${book.title}</h3>
-            <img src="images/covers/${book.image}" alt="${book.title}">
-            <p>${book.description}</p>
-            <ul>
-                <li><strong>Author: </strong> ${book.author}</li>
-                <li><strong>Author Country: </strong> ${book.author_country}</li>
-                <li><strong>Number of pages: </strong> ${book.num_pages}</li>
-                <li><strong>Year Published: </strong> ${book.year_published}</li>
-                <li><strong>Price: </strong> ${book.price}</li>
-                <li><strong>Format: </strong> ${book.format}</li>
-                <li><strong>Genre: </strong> ${book.genre}</li>
-                <li><strong>Publisher City: </strong> ${book.publisher_city}</li>
-            </ul>
-
+            <h5 class="colored-name">${book.author}</h5>
+            <h3>$ ${book.price}</h3>
+            <div class="right-side">
+                <img src="images/covers/${book.image}" alt="${book.title}">
+                <ul>
+                    <li><strong>Author: </strong> ${book.author}</li>
+                    <li><strong>Author Country: </strong> ${book.author_country}</li>
+                    <li><strong>Number of pages: </strong> ${book.num_pages}</li>
+                    <li><strong>Year Published: </strong> ${book.year_published}</li>
+                    <li><strong>Price: </strong> ${book.price}</li>
+                    <li><strong>Format: </strong> ${book.format}</li>
+                    <li><strong>Genre: </strong> ${book.genre}</li>
+                    <li><strong>Publisher City: </strong> ${book.publisher_city}</li>
+                </ul>
+            </div>
+                <p>${book.description}</p>
+                <button type="button" class="btn btn-primary">Add To Cart</button>
+                
+            
         `;
         document.getElementById('detail').innerHTML = html;
     }
@@ -128,8 +117,8 @@
     window.onload = function(){
         getBookList();
 
-        var live_key;
-        var s=document.getElementById('s');
+        
+        var s = document.getElementById('s');
 
         s.addEventListener('keyup', function() {
             loadRequest(s.value);
@@ -138,7 +127,7 @@
         //gets the input search value everytime there is a keypress
         //creates ajax request
         //sends the search to server.php
-        //
+        //gets the resonse back ( xhr.response )
         function loadRequest(key){
 
             var xhr = new XMLHttpRequest();
@@ -151,6 +140,7 @@
                
                 if(xhr.readyState == 4 && xhr.status == 200) {
                     console.log(xhr.response);
+                    loadListView(xhr.response);
                 }
             }
 
@@ -169,11 +159,10 @@
     </script>
 </head>
 <body>
+
+    <h1 class="mt-5">Milad Darani</h1>
+    <h4>Assignment 1 - Adv PHP</h4>
     <div class="container mt-5">
-
-
-
-
 
         <div class="row">
             <div class="col-sm-12">
@@ -182,7 +171,7 @@
                 <!-- put search form here -->
                 <form class="mb-5 form-inline d-flex justify-content-center md-form form-sm active-cyan active-cyan-2 mt-2" action="server.php" method="get">
 
-                <label for="search">Search</label>
+                <label for="s">Search</label>
 
                 <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search" aria-label="Search" id="s" name="s">
                 </form>

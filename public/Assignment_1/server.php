@@ -75,12 +75,23 @@ if(!empty($_GET['book_id'])) {
 //-------------------------------- /if ------------------------
 } elseif(!empty($_GET['s'])){
     $search_term = $_GET['s'];
-    $query = "SELECT * FROM `book`
-    JOIN author USING(author_id) 
-    WHERE `title` LIKE '%{$search_term}%'
-    OR author.name LIKE '%{$search_term}%'
+    $query = "SELECT book.*,
+                author.name as author,
+                author.country as author_country,
+                format.name as format,
+                publisher.name as publisher,
+                publisher.city as publisher_city,
+                genre.name as genre
+                FROM
+                book
+                JOIN author using( author_id)
+                JOIN format using( format_id)
+                JOIN genre using( genre_id)
+                JOIN publisher using( publisher_id)
+                WHERE `title` LIKE '%{$search_term}%'
+                OR author.name LIKE '%{$search_term}%'
+                ORDER BY title ASC";      
 
-    ";
 
     $stmt = $dbh->prepare($query);
     $stmt->execute();
