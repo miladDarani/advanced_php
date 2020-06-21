@@ -119,14 +119,52 @@
         `;
         document.getElementById('detail').innerHTML = html;
     }
-// // ------------------------------------------------------------------- \\
+// ------------------------------------------------------------------- \\
+
+
+// ------------------------------------------------------------------- \\
+
 
     window.onload = function(){
         getBookList();
+
+        var live_key;
+        var s=document.getElementById('s');
+
+        s.addEventListener('keyup', function() {
+            loadRequest(s.value);
+        })
+
+        //gets the input search value everytime there is a keypress
+        //creates ajax request
+        //sends the search to server.php
+        //
+        function loadRequest(key){
+
+            var xhr = new XMLHttpRequest();
+            
+            xhr.open('GET', "server.php?s=" + key);
+
+            xhr.responseType = 'json';
+
+            xhr.onreadystatechange = function() {
+               
+                if(xhr.readyState == 4 && xhr.status == 200) {
+                    console.log(xhr.response);
+                }
+            }
+
+            xhr.send(null);
         
-    }
+        }
+
+    } //window
+
+
 
 // ------------------------------------------------------------------- \\
+    
+
 
     </script>
 </head>
@@ -140,13 +178,13 @@
         <div class="row">
             <div class="col-sm-12">
 
-                
+
                 <!-- put search form here -->
                 <form class="mb-5 form-inline d-flex justify-content-center md-form form-sm active-cyan active-cyan-2 mt-2" action="server.php" method="get">
 
                 <label for="search">Search</label>
 
-                <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search" aria-label="Search" name="s">
+                <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search" aria-label="Search" id="s" name="s">
                 </form>
 
 
