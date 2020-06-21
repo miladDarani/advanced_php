@@ -3,13 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Assignment 1</title>
+
     <!-- BOOTSTRAP -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <!-- Main CSS -->
     <link rel="stylesheet" href="style.css" type="text/css">
+
+    <!-- GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Condensed&display=swap" rel="stylesheet">
 
     <script>
 // ------------------------------------------------------------------- \\
+    /**
+     * [getBookList description]
+     * @param  {[text]} 
+     * @return {[json]}      
+     */
     function getBookList(data)
         {
             var xhr  = new XMLHttpRequest();
@@ -27,7 +37,12 @@
         }
 
 // ------------------------------------------------------------------- \\
-
+    /**
+     * [loadListView description]
+     * @param  {[text]} books 
+     * @return {[html]}   
+     * Authomatically refreshes results through ajax    
+     */
     function loadListView(books) {
         var html = '<table class=" table table-striped table-dark">';
         html+= `
@@ -56,11 +71,18 @@
         html+= "</table>";
         setTimeout(function(){
             document.getElementById('list').innerHTML = html;
-        },500)
+        },700)
         
     }
 // ------------------------------------------------------------------- \\
+    /**
+     * [loadBook description]
+     * @param  {[event]} e    [description]
+     * @param  {[text]} book [description]
+     * @return {[json]}      [description]
+     */
     function loadBook(e, book){
+        e.preventDefault();
         console.log(book);
         var book_id = book.getAttribute('data-id');
 
@@ -82,6 +104,11 @@
     }    
 
 // ------------------------------------------------------------------- \\
+    /**
+     * [loadDetail description]
+     * @param  {[text]} book 
+     * @return {[type]}      [description]
+     */
     function loadDetail(book){
         var html = 
         `
@@ -162,11 +189,11 @@
 
     <h1 class="mt-5">Milad Darani</h1>
     <h4>Assignment 1 - Adv PHP</h4>
+
     <div class="container mt-5">
 
         <div class="row">
             <div class="col-sm-12">
-
 
                 <!-- put search form here -->
                 <form class="mb-5 form-inline d-flex justify-content-center md-form form-sm active-cyan active-cyan-2 mt-2" action="server.php" method="get">
@@ -178,22 +205,22 @@
 
 
             </div>
-            <div class="col-sm-6 list">
+            <div class="col-sm-12 col-md-12 col-lg-6 list">
                 <div id="list">
                     <h2 class="text-center">List view</h2>
-                    <img class="loader-gif" src="images/200.gif" alt="">
+                    <img  class="loader-gif" src="images/load1.gif" alt="">
                 </div>
             </div>
 
-            <div class="col-sm-6 detail">
+            <div class="col-sm-12 col-md-12 col-lg-6 detail mb-5">
                 <div id="detail">
                     <h2 class="text-center">Detail View </h2>
                     
                 </div>
             </div>
 
-        </div>
+        </div> <!-- /row -->
 
-    </div>
+    </div> <!-- /container -->
 </body>
 </html>

@@ -1,50 +1,17 @@
 <?php
-
-// Server PHP
-
-
-
+try{
+// adding Databse
 $dbh = new PDO('sqlite:booksite.sqlite');
-
 $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+//Type = JSON
 header('Content-Type: application/json');
 
-function searchResults($term){
 
-    //get one book
-    $query = "SELECT book.*,
-                author.name as author,
-                author.country as author_country,
-                format.name as format,
-                publisher.name as publisher,
-                publisher.city as publisher_city,
-                genre.name as genre
-                FROM
-                book
-                JOIN author using( author_id)
-                JOIN format using( format_id)
-                JOIN genre using( genre_id)
-                JOIN publisher using( publisher_id)
-                WHERE
-                book.title LIKE :term1";
-
-    $stmt = $dbh->prepare($query);
-
-    $params = array(
-        ':term1' => "%{$term}%"
-    );
-
-    $stmt->execute($params);
-
-    echo json_encode($stmt->fetch(PDO::FETCH_ASSOC));
-
-    die;  
-}
 
 if(!empty($_GET['book_id'])) {
 
-    //get one book
+    //gets one book
     $query = "SELECT book.*,
                 author.name as author,
                 author.country as author_country,
@@ -74,6 +41,8 @@ if(!empty($_GET['book_id'])) {
     die;
 //-------------------------------- /if ------------------------
 } elseif(!empty($_GET['s'])){
+
+    //search result
     $search_term = $_GET['s'];
     $query = "SELECT book.*,
                 author.name as author,
@@ -94,13 +63,15 @@ if(!empty($_GET['book_id'])) {
 
 
     $stmt = $dbh->prepare($query);
+    
     $stmt->execute();
 
     echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
     //search query in here
     //search agaisnt author and , use 'like'
 } else {
-    //get all books
+
+    // otherwise get all books
     $query = "SELECT book.*,
                 author.name as author,
                 author.country as author_country,
@@ -123,7 +94,7 @@ if(!empty($_GET['book_id'])) {
     echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
 }
 
-// } catch (Exception $e) {
-//     $errors = ['error' => $e->getMessage()];
-//     echo json_encode($errors);
-// }
+} catch (Exception $e) {
+    $errors = ['error' => $e->getMessage()];
+    echo json_encode($errors);
+}
