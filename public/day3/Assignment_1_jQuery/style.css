@@ -1,0 +1,69 @@
+*{
+    transition: .2s
+}
+
+body{
+    background-color:#0c1b2b;
+    color:white;
+    font-family: 'Ubuntu Condensed', sans-serif;
+}
+th,td,tr{
+    color:white;
+}
+
+        
+.loader-gif{
+    text-align: center;
+    margin: 0 auto;
+    width:15%;
+    border:none;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.active-cyan-2 input.form-control[type=text]:focus:not([readonly]) {
+    border-bottom: 1px solid #4dd0e1;
+    box-shadow: 0 1px 0 0 #4dd0e1;
+}
+.active-cyan input.form-control[type=text] {
+    border-bottom: 1px solid #4dd0e1;
+    box-shadow: 0 1px 0 0 #4dd0e1;
+}
+.active-cyan .fa, .active-cyan-2 .fa {
+    color: #4dd0e1;
+}
+
+a{
+    color:darkturquoise;
+}
+
+a:hover {
+    color: yellow;
+}
+
+input.form-control[type=text]{
+    height:30px;
+}
+img{
+    border:8px ridge white;
+    padding: 4px
+}
+
+h1,h4,h5{
+    text-align: center;
+}
+
+.right-side{
+    display: flex;
+}
+
+.colored-name{
+    background-color: red;
+    padding: 2px 3px;
+    border-radius: 5px;
+    color:white;
+    font-size: 14px;
+    width: 15%;
+}

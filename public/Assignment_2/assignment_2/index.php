@@ -207,36 +207,71 @@
             </div>
             <div class="col-sm-12 col-md-12 col-lg-6 list">
                 <div id="list">
+               
                     <h2 class="text-center">List view</h2>
+                
                     <!-- <img  class="loader-gif" src="images/load1.gif" alt=""> -->
                     <table class=" table table-striped table-dark">
                          <tr>
                             <th>Title</th>
                             <th>Author</th>
                             <th>Genre</th>
-                            <th>Num pages</th>
+                            <th>Pages</th>
                             <th>Year </th>
+                            <th>Image </th>
+
                         </tr>
+                        
+                        <tr v-for="book in books" class="book" id="books1">
                             
+                            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">{{book.title}}</button ></td>
+                            <td>{{book.author}}</td>
+                            <td>{{book.genre}}</td>
+                            <td>{{book.num_pages}}</td>
+                            <td>{{book.year_published}}</td>
+                            <td><img v-bind:src=" 'images/covers/' + book.image  " /></td> 
+                                         
+                        </tr> 
 
-                            <tr v-for="book in books" class="book">
-                                <td>{{book.title}}</td>
-                                <td>{{book.author}}</td>
-                                <td>{{book.num_pages}}</td>
-                                <td>{{book.genre}}</td>
-                                <td>{{book.year_published}}</td>
 
-                            </tr>
+                        
+                        
+
                             
 
                     </table>
+                        <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
                 </div>
             </div>
 
             <div class="col-sm-12 col-md-12 col-lg-6 detail mb-5">
                 <div id="detail">
                     <h2 class="text-center">Detail View </h2>
-                    <img v-bind:src="pic(milad.darani@hotmail.com)" alt="">
+                    
                 </div>
             </div>
 
@@ -250,7 +285,17 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.16.0/js/md5.min.js"></script>
 <!-- My Script -->
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
 <script>
+
+
+
+
+
+
+
 var app = new Vue({
         el:"#list",
         data:{
@@ -259,16 +304,26 @@ var app = new Vue({
             ]
         },
         methods: {
+
+
             loadBooks: function(){
                 var self = this;
                 axios.get('server.php')
                     .then(function(response){
-                        self.books= response.data
+                        self.books= response.data;
+                        console.log(self.books)
+
                     })
                     .catch(function(errors){
                         console.error(error);
                     })
             },
+
+            bookModal: function(){
+
+            },
+
+
             delteRecord: function(id){
                 if(!confirm('Do you really wanna delete')){;
                 return} 
@@ -282,18 +337,30 @@ var app = new Vue({
                         console.error(error)
                     })
             },
+
+
             loadListView: function(books) {
                 console.log(books)
         
             },
+
+
             pic: function(email){
                 return 'https://www.gravatar.com/avatar/' + md5(email)
-            }
+            },
+
+
+             getImgUrl(pic) {
+                var image = "images/covers/" + pic 
+                return image;
+  }
         },
         mounted: function(){
             this.loadBooks();
         }
     })
+
+
 </script>
 </body>
 </html>
