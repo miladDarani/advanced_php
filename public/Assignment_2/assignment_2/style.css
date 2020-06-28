@@ -1,5 +1,6 @@
 *{
-    transition: .2s
+    transition: .2s;
+    color:black;
 }
 
 body{
@@ -47,14 +48,33 @@ input.form-control[type=text]{
     height:30px;
 }
 img{
-    border:8px ridge white;
-    padding: 4px
+    border:3px ridge white;
+    padding: 4px;
+    width:100px;
     
 }
 .cover-pic {
     max-width: 150px;
     width:80px;
     border-style: solid ;
+}
+
+/*
+#myModal1 {
+    border:1px solid orange;
+    position: absolute;
+    top: 0;
+    left: 15%;
+    width: 70%;
+    height:300px;
+    z-index: 40000;
+    background-color:white;
+    color: black;
+    display: none;
+}*/
+
+#myModal2{
+    display: none;
 }
 
 h1,h4,h5{
@@ -73,3 +93,4 @@ h1,h4,h5{
     font-size: 14px;
     width: 15%;
 }
+

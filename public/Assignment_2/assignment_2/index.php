@@ -12,7 +12,8 @@
 
     <!-- GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Condensed&display=swap" rel="stylesheet">
-
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/977c9f68f6.js" crossorigin="anonymous"></script>
     <script>
 // ------------------------------------------------------------------- \\
     /**
@@ -135,6 +136,7 @@
         `;
         document.getElementById('detail').innerHTML = html;
     }
+    var number  =3;
 // ------------------------------------------------------------------- \\
 
 
@@ -205,7 +207,8 @@
 
 
             </div>
-            <div class="col-sm-12 col-md-12 col-lg-6 list">
+            <div class="col-sm-12 col-md-12 col-lg-12 list">
+                <div id="list-wrapper">
                 <div id="list">
                
                     <h2 class="text-center">List view</h2>
@@ -224,56 +227,81 @@
                         
                         <tr v-for="book in books" class="book" id="books1">
                             
-                            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">{{book.title}}</button ></td>
+                            <td>
+                                <button @click="bookModal(book.book_id)" type="button"  class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                    {{book.title}}
+                                </button>
+                            </td>
+
+
                             <td>{{book.author}}</td>
                             <td>{{book.genre}}</td>
                             <td>{{book.num_pages}}</td>
                             <td>{{book.year_published}}</td>
                             <td><img v-bind:src=" 'images/covers/' + book.image  " /></td> 
-                                         
+                            <td>
+                            <div class="modal " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body" id="modal-body">
+                                   
+                                    
+
+
+
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            </td>
+
+       
                         </tr> 
 
 
+                        
                         
                         
 
                             
 
                     </table>
-                        <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
-</button>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
+
+
                 </div>
-            </div>
-
-            <div class="col-sm-12 col-md-12 col-lg-6 detail mb-5">
-                <div id="detail">
-                    <h2 class="text-center">Detail View </h2>
+                <div id="myModal1"></div>
+                
                     
-                </div>
+                        
+
+                    
+
+               
+
+                
+
+
+                
+
+
+
+
+
             </div>
+            </div>
+
+
 
         </div> <!-- /row -->
 
@@ -287,7 +315,8 @@
 <!-- My Script -->
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js" integrity="sha384-1CmrxMRARb6aLqgBO7yyAxTOQE2AKb9GfXnEo760AUcUmFx3ibVJJAzGytlQcNXd" crossorigin="anonymous"></script>
 <script>
 
 
@@ -311,56 +340,73 @@ var app = new Vue({
                 axios.get('server.php')
                     .then(function(response){
                         self.books= response.data;
-                        console.log(self.books)
+                        
 
                     })
                     .catch(function(errors){
                         console.error(error);
                     })
             },
+            
 
-            bookModal: function(){
+            bookModal: function(id){
+                
+              var self = this;
+                axios.get('server.php?book_id='+id)
+                .then(function(response){
 
+                    //RESULT OF ONE BOOK
+                    var one_book = response.data;
+                    self.loadOneBook(one_book);
+                    document.getElementById('myModal1').style.display = 'block';
+                  
+                    console.log(response.data)
+                })
+                .catch(function(error){
+                    console.error(error)
+                })
+                 
+                
             },
 
-
-            delteRecord: function(id){
-                if(!confirm('Do you really wanna delete')){;
-                return} 
-                //axios,post,delete record;
-               var self = this;
-               axios.post('server.php', {id: id})
-                    .then(function(response){
-                        self.loadUsers();
-                    })
-                    .catch(function(error){
-                        console.error(error)
-                    })
-            },
+            loadOneBook: function(data) {
+              
+                html = `
+                 
+                    <p style="color:black">${data.title}</p>
 
 
-            loadListView: function(books) {
-                console.log(books)
+
         
+                    
+                `
+                document.getElementById('modal-body').innerHTML = html;
             },
+            
+
+        
+            },// Methods
 
 
-            pic: function(email){
-                return 'https://www.gravatar.com/avatar/' + md5(email)
-            },
 
 
-             getImgUrl(pic) {
-                var image = "images/covers/" + pic 
-                return image;
-  }
-        },
         mounted: function(){
             this.loadBooks();
+            
+            
+
+
         }
+
     })
 
 
 </script>
+<script>
+    $(document).ready(function(){
+
+    })
+</script>  
+         
 </body>
 </html>
