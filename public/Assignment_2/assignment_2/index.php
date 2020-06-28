@@ -14,178 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Condensed&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/977c9f68f6.js" crossorigin="anonymous"></script>
-    <script>
-// ------------------------------------------------------------------- \\
-    /**
-     * [getBookList description]
-     * @param  {[text]} 
-     * @return {[json]}      
-     */
-    // function getBookList(data)
-    //     {
-    //         var xhr  = new XMLHttpRequest();
-    //         xhr.open('GET', 'server.php');
-    //         xhr.responseType = 'json';
-    //         xhr.onreadystatechange = function ()
-    //         {
-    //             if(xhr.readyState == 4 && xhr.status == 200 ) {
-    //                 console.log(xhr.response);
-    //                 loadListView(xhr.response);
-    //             }
-    //         }
 
-    //         xhr.send(null);
-    //     }
-
-// ------------------------------------------------------------------- \\
-    /**
-     * [loadListView description]
-     * @param  {[text]} books 
-     * @return {[html]}   
-     * Authomatically refreshes results through ajax    
-     */
-    // function loadListView(books) {
-    //     var html = '<table class=" table table-striped table-dark">';
-    //     html+= `
-    //         <tr>
-    //             <th>Title</th>
-    //             <th>Author</th>
-    //             <th>Genre</th>
-    //             <th>Num pages</th>
-    //             <th>Year </th>
-    //         </tr>
-    //     `;
-
-    //     for(var i in books) {
-
-    //         html+=
-    //         `
-    //             <tr>
-    //                 <td><a onclick="loadBook(event, this)" class= "book" href="#" data-id="${books[i].book_id}"> ${books[i].title}</a></td>
-    //                 <td>${books[i].author}</td>
-    //                 <td>${books[i].genre}</td>
-    //                 <td>${books[i].num_pages}</td>
-    //                 <td>${books[i].year_published}</td>
-    //             </tr>
-    //         `;
-    //     }
-    //     html+= "</table>";
-    //     setTimeout(function(){
-    //         document.getElementById('list').innerHTML = html;
-    //     },700)
-        
-    // }
-// ------------------------------------------------------------------- \\
-    /**
-     * [loadBook description]
-     * @param  {[event]} e    [description]
-     * @param  {[text]} book [description]
-     * @return {[json]}      [description]
-     */
-    function loadBook(e, book){
-        e.preventDefault();
-        console.log(book);
-        var book_id = book.getAttribute('data-id');
-
-        var xhr = new XMLHttpRequest();
-
-        var data = encodeURI('book_id=' + book_id);
-
-        xhr.responseType = 'json';
-
-        xhr.open('GET', 'server.php?' + data);
-
-        xhr.onreadystatechange = function (){
-            if(xhr.readyState == 4 && xhr.status == 200 ){
-                loadDetail(xhr.response);
-            }
-        }
-
-        xhr.send(null);
-    }    
-
-// ------------------------------------------------------------------- \\
-    /**
-     * [loadDetail description]
-     * @param  {[text]} book 
-     * @return {[type]}      [description]
-     */
-    function loadDetail(book){
-        var html = 
-        `
-            <h3>${book.title}</h3>
-            <h5 class="colored-name">${book.author}</h5>
-            <h3>$ ${book.price}</h3>
-            <div class="right-side">
-                <img src="images/covers/${book.image}" alt="${book.title}">
-                <ul>
-                    <li><strong>Author: </strong> ${book.author}</li>
-                    <li><strong>Author Country: </strong> ${book.author_country}</li>
-                    <li><strong>Number of pages: </strong> ${book.num_pages}</li>
-                    <li><strong>Year Published: </strong> ${book.year_published}</li>
-                    <li><strong>Price: </strong> ${book.price}</li>
-                    <li><strong>Format: </strong> ${book.format}</li>
-                    <li><strong>Genre: </strong> ${book.genre}</li>
-                    <li><strong>Publisher City: </strong> ${book.publisher_city}</li>
-                </ul>
-            </div>
-                <p>${book.description}</p>
-                <button type="button" class="btn btn-primary">Add To Cart</button>
-                
-            
-        `;
-        document.getElementById('detail').innerHTML = html;
-    }
-    var number  =3;
-// ------------------------------------------------------------------- \\
-
-
-// ------------------------------------------------------------------- \\
-
-
-    // window.onload = function(){
-    //     getBookList();
-
-        
-    //     var s = document.getElementById('s');
-
-    //     s.addEventListener('keyup', function() {
-    //         loadRequest(s.value);
-    //     })
-
-    //     //gets the input search value everytime there is a keypress
-    //     //creates ajax request
-    //     //sends the search to server.php
-    //     //gets the resonse back ( xhr.response )
-    //     function loadRequest(key){
-
-    //         var xhr = new XMLHttpRequest();
-            
-    //         xhr.open('GET', "server.php?s=" + key);
-
-    //         xhr.responseType = 'json';
-
-    //         xhr.onreadystatechange = function() {
-               
-    //             if(xhr.readyState == 4 && xhr.status == 200) {
-    //                 console.log(xhr.response);
-    //                 loadListView(xhr.response);
-    //             }
-    //         }
-
-    //         xhr.send(null);
-        
-    //     }
-
-    // } //window
-
-
-
-// ------------------------------------------------------------------- \\
-    
-
-
-    </script>
 </head>
 <body>
 
@@ -201,7 +30,7 @@
                 <div id="list">
                
                     <h2 class="text-center">List view</h2>
-                    <p><button @click="loadBooks()" class="btn btn-primary">RESET BOOKS</button></p>
+                    <p><button @click="loadBooks()" class="btn btn-warning">RESET BOOKS</button></p>
                 
                     <!-- <img  class="loader-gif" src="images/load1.gif" alt=""> -->
                     <table class=" table table-striped table-dark">
@@ -224,8 +53,6 @@
                                     {{book.title}}
                                 </button>
                             </td>
-
-
                             <td class="milad-td" style=" cursor:pointer" @click="loadAuthor(book.author_id)">{{book.author}}</td>
                             <td class="milad-td" style=" cursor:pointer" class="genre" @click="loadGenre(book.genre_id)">{{book.genre}}</td>
                             <td class="milad-td" style=" cursor:pointer" @click="loadFormat(book.format_id)">{{book.format}}</td>
@@ -322,7 +149,7 @@
 var app = new Vue({
         el:"#list",
         data:{
-            title: "Vue loading data with php",
+            title: "Assignment 2",
             books:[
             ]
         },
@@ -421,13 +248,12 @@ var app = new Vue({
                     <div class="modal-wrap">    
                         <div id="left">
                             
-                            <h5 style="text-align:left" class="mt-3">$ ${data.price}</h5>
-                            <h6>$ ${data.format}</h6>
-                            <h6 class="mt-3">${data.author}</h6>
-                            <h6>${data.genre}</h6>
+                            <h5 style="text-align:left" class="mt-3">Price:  $${data.price}</h5>
+                            <h6>Format: ${data.format}</h6>
+                            <h6>Genre: ${data.genre}</h6>
                             <h6>Pages: ${data.num_pages}</h6>
-                            <h6>${data.year_published}</h6>
-                            <h6>${data.publisher}</h6>
+                            <h6>Year : ${data.year_published}</h6>
+                            <h6>Publisher: ${data.publisher}</h6>
                             
                         </div>
 
