@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Assignment 1</title>
+    <title>Assignment 2</title>
 
     <!-- BOOTSTRAP -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -61,74 +61,40 @@
                             <td>{{book.year_published}}</td>
                             <td><img v-bind:src=" 'images/covers/' + book.image  " /></td> 
                             <td>
-                            <div class="modal " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                              <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                  
+
+                                <div class="modal " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                      
+                                        <button type="button" class="close" style="text-align:right; padding:0 10px;" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      
+                                      <div class="modal-body" id="modal-body">
+                                       
+                                        <!-- Data For Modal is dynamically inserted here -->
+
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                     
-                                    <button type="button" class="close" style="text-align:right; padding:0 10px;" data-dismiss="modal" aria-label="Close">
-                                      <span aria-hidden="true">&times;</span>
-                                    </button>
-                                  
-                                  <div class="modal-body" id="modal-body">
-                                   
-                                    
-
-
-
-                                  </div>
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                
+                                      </div>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            </div>
-                            </td>
-
-       
-                        </tr> 
-
-
-                        
-                        
-                        
-
                             
-
+                            </td>
+                        </tr> 
                     </table>
-
-
-
                 </div>
-                <div id="myModal1"></div>
-                
-                    
-                        
-
-                    
-
-               
-
-                
-
-
-                
-
-
-
-
-
             </div>
-            </div>
-
-
-
+            
         </div> <!-- /row -->
-
     </div> <!-- /container -->
 
-    <!-- VUE -->
+
+
+<!-- VUE -->
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <!-- AXIOS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
@@ -138,13 +104,8 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <!-- Bootstrap JS -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js" integrity="sha384-1CmrxMRARb6aLqgBO7yyAxTOQE2AKb9GfXnEo760AUcUmFx3ibVJJAzGytlQcNXd" crossorigin="anonymous"></script>
+
 <script>
-
-
-
-
-
-
 
 var app = new Vue({
         el:"#list",
@@ -155,19 +116,26 @@ var app = new Vue({
         },
         methods: {
 
-
+            /**
+             * [loadBooks description]
+             * @return all books JSON
+             */
             loadBooks: function(){
                 var self = this;
                 axios.get('server.php')
                     .then(function(response){
                         self.books= response.data;
-                        
-
                     })
                     .catch(function(errors){
                         console.error(error);
                     })
             },
+
+            /**
+             * [loadGenre description]
+             * @param  
+             * @return Selected Genre JSON
+             */
             loadGenre: function(id){
                 var self = this;
                 axios.get('server.php?genre_id=' + id)
@@ -180,6 +148,11 @@ var app = new Vue({
                         console.error(error);
                     })
             },
+            /**
+             * [loadFormat description]
+             * @param  
+             * @return Selected Format JSON
+             */
             loadFormat: function(id){
                 var self = this;
                 axios.get('server.php?format_id=' + id)
@@ -192,6 +165,11 @@ var app = new Vue({
                         console.error(error);
                     })
             },
+            /**
+             * [loadFormat description]
+             * @param  
+             * @return Selected Author JSON
+             */
             loadAuthor: function(id){
                 var self = this;
                 axios.get('server.php?author_id=' + id)
@@ -204,6 +182,11 @@ var app = new Vue({
                         console.error(error);
                     })
             },
+            /**
+             * [loadFormat description]
+             * @param  
+             * @return Selected Publisher JSON
+             */
             loadPublisher: function(id){
                 var self = this;
                 axios.get('server.php?publisher_id=' + id)
@@ -216,7 +199,11 @@ var app = new Vue({
                         console.error(error);
                     })
             },
-
+            /**
+             * [loadFormat description]
+             * @param  
+             * @return Selected Book (Single) JSON
+             */
             bookModal: function(id){
                 
               var self = this;
@@ -236,7 +223,11 @@ var app = new Vue({
                  
                 
             },
-
+            /**
+             * [loadFormat description]
+             * @param  
+             * @return Selected Book JSON
+             */
             loadOneBook: function(data) {
               
                 html = `
@@ -263,42 +254,25 @@ var app = new Vue({
                         </div>
                      
                     </div>
-                       <div class="modal-p">
-                            <p>${data.description}</p>
-                        </div>
-                    
 
-
-        
-                    
+                    <div class="modal-p">
+                        <p>${data.description}</p>
+                    </div>
+                       
                 `
                 document.getElementById('modal-body').innerHTML = html;
             },
-            
-
         
-            },// Methods
-
-
-
+        },// Methods
 
         mounted: function(){
             this.loadBooks();
-            
-            
-
-
         }
 
     })
 
 
-</script>
-<script>
-    $(document).ready(function(){
-
-    })
-</script>  
+</script> 
          
 </body>
 </html>
