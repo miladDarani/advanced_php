@@ -21,6 +21,8 @@ if(!empty($_GET['book_id'])) {
     $params = array(':book_id' => (int) $_GET['book_id']);
     $stmt->execute($params);
     $results = $stmt->fetch(PDO::FETCH_ASSOC);
+
+
 } elseif(!empty($_GET['genre_id'])) {
    $query = 'SELECT book.*, 
         genre.name as genre,
@@ -37,6 +39,8 @@ if(!empty($_GET['book_id'])) {
     $params = array(':genre_id' => (int) $_GET['genre_id']);
     $stmt->execute($params);
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
 } elseif(!empty($_GET['format_id'])) {
     $query = 'SELECT book.*, 
         genre.name as genre,
@@ -53,6 +57,8 @@ if(!empty($_GET['book_id'])) {
     $params = array(':format_id' => (int) $_GET['format_id']);
     $stmt->execute($params);
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
 } elseif(!empty($_GET['publisher_id'])) {
     $query = 'SELECT book.*, 
         genre.name as genre,
@@ -69,6 +75,8 @@ if(!empty($_GET['book_id'])) {
     $params = array(':publisher_id' => (int) $_GET['publisher_id']);
     $stmt->execute($params);
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
 } elseif(!empty($_GET['author_id'])) {
     $query = 'SELECT book.*, 
         genre.name as genre,
@@ -85,6 +93,8 @@ if(!empty($_GET['book_id'])) {
     $params = array(':author_id' => (int) $_GET['author_id']);
     $stmt->execute($params);
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    
 }  else {
      $query = 'SELECT book.*, 
         genre.name as genre,

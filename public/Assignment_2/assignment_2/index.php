@@ -190,28 +190,18 @@
 <body>
 
     <h1 class="mt-5">Milad Darani</h1>
-    <h4>Assignment 1 - Adv PHP</h4>
+    <h4>Assignment 2 - Adv PHP</h4>
 
     <div class="container mt-5">
 
         <div class="row">
-            <div class="col-sm-12">
 
-                <!-- put search form here -->
-                <form class="mb-5 form-inline d-flex justify-content-center md-form form-sm active-cyan active-cyan-2 mt-2" action="server.php" method="get">
-
-                <label for="s">Search</label>
-
-                <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search" aria-label="Search" id="s" name="s">
-                </form>
-
-
-            </div>
             <div class="col-sm-12 col-md-12 col-lg-12 list">
                 <div id="list-wrapper">
                 <div id="list">
                
                     <h2 class="text-center">List view</h2>
+                    <p><button @click="loadBooks()" class="btn btn-primary">RESET BOOKS</button></p>
                 
                     <!-- <img  class="loader-gif" src="images/load1.gif" alt=""> -->
                     <table class=" table table-striped table-dark">
@@ -219,6 +209,8 @@
                             <th>Title</th>
                             <th>Author</th>
                             <th>Genre</th>
+                            <th>Format</th>
+                            <th>Publisher</th>
                             <th>Pages</th>
                             <th>Year </th>
                             <th>Image </th>
@@ -234,8 +226,10 @@
                             </td>
 
 
-                            <td>{{book.author}}</td>
-                            <td>{{book.genre}}</td>
+                            <td class="milad-td" style=" cursor:pointer" @click="loadAuthor(book.author_id)">{{book.author}}</td>
+                            <td class="milad-td" style=" cursor:pointer" class="genre" @click="loadGenre(book.genre_id)">{{book.genre}}</td>
+                            <td class="milad-td" style=" cursor:pointer" @click="loadFormat(book.format_id)">{{book.format}}</td>
+                            <td class="milad-td" style=" cursor:pointer" @click="loadPublisher(book.publisher_id)">{{book.publisher}}</td>
                             <td>{{book.num_pages}}</td>
                             <td>{{book.year_published}}</td>
                             <td><img v-bind:src=" 'images/covers/' + book.image  " /></td> 
@@ -243,12 +237,12 @@
                             <div class="modal " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                               <div class="modal-dialog" role="document">
                                 <div class="modal-content">
-                                  <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  
+                                    
+                                    <button type="button" class="close" style="text-align:right; padding:0 10px;" data-dismiss="modal" aria-label="Close">
                                       <span aria-hidden="true">&times;</span>
                                     </button>
-                                  </div>
+                                  
                                   <div class="modal-body" id="modal-body">
                                    
                                     
@@ -258,7 +252,7 @@
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                
                                   </div>
                                 </div>
                               </div>
@@ -347,7 +341,54 @@ var app = new Vue({
                         console.error(error);
                     })
             },
-            
+            loadGenre: function(id){
+                var self = this;
+                axios.get('server.php?genre_id=' + id)
+                    .then(function(response){
+                        self.books= response.data;
+                        console.log(self.books)
+
+                    })
+                    .catch(function(errors){
+                        console.error(error);
+                    })
+            },
+            loadFormat: function(id){
+                var self = this;
+                axios.get('server.php?format_id=' + id)
+                    .then(function(response){
+                        self.books= response.data;
+                        console.log(self.books)
+
+                    })
+                    .catch(function(errors){
+                        console.error(error);
+                    })
+            },
+            loadAuthor: function(id){
+                var self = this;
+                axios.get('server.php?author_id=' + id)
+                    .then(function(response){
+                        self.books= response.data;
+                        console.log(self.books)
+
+                    })
+                    .catch(function(errors){
+                        console.error(error);
+                    })
+            },
+            loadPublisher: function(id){
+                var self = this;
+                axios.get('server.php?publisher_id=' + id)
+                    .then(function(response){
+                        self.books= response.data;
+                        console.log(self.books)
+
+                    })
+                    .catch(function(errors){
+                        console.error(error);
+                    })
+            },
 
             bookModal: function(id){
                 
@@ -373,8 +414,33 @@ var app = new Vue({
               
                 html = `
                  
-                    <p style="color:black">${data.title}</p>
 
+                    <h3 style="color:black">${data.title}</h3>
+                    <h6 class="author-head">By: ${data.author}</h6>
+
+                    <div class="modal-wrap">    
+                        <div id="left">
+                            
+                            <h5 style="text-align:left" class="mt-3">$ ${data.price}</h5>
+                            <h6>$ ${data.format}</h6>
+                            <h6 class="mt-3">${data.author}</h6>
+                            <h6>${data.genre}</h6>
+                            <h6>Pages: ${data.num_pages}</h6>
+                            <h6>${data.year_published}</h6>
+                            <h6>${data.publisher}</h6>
+                            
+                        </div>
+
+
+                        <div id="right">
+                            <img class="modal-img" src="images/covers/${data.image}" />
+                        </div>
+                     
+                    </div>
+                       <div class="modal-p">
+                            <p>${data.description}</p>
+                        </div>
+                    
 
 
         

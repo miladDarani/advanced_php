@@ -1,6 +1,6 @@
 *{
     transition: .2s;
-    color:black;
+
 }
 
 body{
@@ -12,6 +12,9 @@ th,td,tr{
     color:white;
 }
 
+.milad-td:hover {
+    color:orange;
+}
         
 .loader-gif{
     text-align: center;
@@ -22,6 +25,20 @@ th,td,tr{
     justify-content: center;
     align-items: center;
     display: flex;
+}
+
+.modal-wrap{
+    display: flex;
+    justify-content: space-between;
+    color:black;
+}
+
+p{
+    color: black
+}
+
+.modal-img{
+    width:150px;
 }
 
 .active-cyan-2 input.form-control[type=text]:focus:not([readonly]) {
@@ -38,6 +55,14 @@ th,td,tr{
 
 a{
     color:darkturquoise;
+}
+
+.author-head{
+    background-color: red;
+    color:white;
+    border-radius: 7px;
+    padding: 2px 7px;
+    width:30%;
 }
 
 a:hover {
